@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
+<!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
+<!--[if IE 8]>         <html class="no-js lt-ie9"> <![endif]-->
+<!--[if gt IE 8]>      <html class="no-js"> <!--<![endif]-->
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title></title>
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="">
+    <style>
+        .zui-table {
+            border: solid 1px #DDEEEE;
+            border-collapse: collapse;
+            border-spacing: 0;
+            font: normal 13px Arial, sans-serif;
+        }
+
+        .zui-table thead th {
+            background-color: #DDEFEF;
+            border: solid 1px #DDEEEE;
+            color: #336B6B;
+            padding: 10px;
+            text-align: left;
+            text-shadow: 1px 1px 1px #fff;
+        }
+
+        .zui-table tbody td {
+            border: solid 1px #DDEEEE;
+            color: #333;
+            padding: 10px;
+            text-shadow: 1px 1px 1px #fff;
+        }
+    </style>
+    <style>
+        td.debug {
+            color: green !important;
+        }
+
+        td.warnundef {
+            color: grey !important;
+        }
+
+        td.warnopt {
+            color: orange !important;
+        }
+
+        td.warnbase {
+            color: magenta !important;
+        }
+
+        td.error {
+            color: red !important;
+            background-color: yellow
+        }
+
+        div.filters,
+        div.filters h3 {
+            display: inline;
+        }
+
+        div.filters td {
+            padding-right: 1em;
+        }
+    </style>
+</head>
+
+<body>
+    <!--[if lt IE 7]>
+            <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="#">upgrade your browser</a> to improve your experience.</p>
+        <![endif]-->
+    <header>
+        <h1>CNXValidate</h1>
+    </header>
+    <label>Upload file to validate: <input type="file" id="upload" disabled /></label>
+    <label>Application Definition Version:<select id="application_version"></select></label>
+    <button id="revalidate">validate</button>
+    <div>
+        <label>Application definition:<input type="text" id="appDef" width="30" /></label>
+        <label>HDF5 Path:<input type="text" id="hdf5Path" width="30" /></label>
+        <label>Process root group:<input type="checkbox" id="procroot" /></label>
+    </div>
+    <hr />
+    <div class="filters" id="filters">
+        <h3>Show severity:</h3>
+    </div>
+    <div class="results">
+        <h2>Results:</h2>
+        <table id="results_table" class="zui-table"></table>
+    </div>
+    <script type="module">
+        import module_factory from "./build/webvalidate.js";
+
+        const SEVERITIES = [
+            "debug",
+            "warnundef",
+            "warnbase",
+            "warnopt",
+            "error"
+        ];
+
+        const COLUMNS = ["nxdlPath", "dataPath", "sev", "message", "definition"];
+        const WORKING_FILE = "current.h5";
+
+        var validation_results; // store values here for re-rendering the table.
+
+        window.onload = async function () {
+            let libvalid = await module_factory();
+
+            let filters = document.getElementById("filters");
+            for (let sev of SEVERITIES) {
+                let td = document.createElement("td");
+                td.classList.add(sev);
+                let flabel = document.createElement("label");
+                let finput = document.createElement("input");
+                finput.type = "checkbox";
+                finput.checked = true;
+                finput.id = "show_severity_" + sev;
+                finput.onchange = render_table;
+                flabel.innerText = sev;
+                flabel.appendChild(finput);
+                td.appendChild(flabel);
+                filters.appendChild(td);
+            }
+
+            async function revalidate() {
+                if (!libvalid.FS.analyzePath(WORKING_FILE).exists) {
+                    return
+                }
+                let app_path = document.getElementById("application_version").value;
+                let appDef = document.getElementById("appDef").value;
+                let hdf5Path = document.getElementById("hdf5Path").value;
+                let procroot = document.getElementById("procroot").checked;
+                let validator = new libvalid.Validator(app_path);
+                let output = validator.validate(WORKING_FILE, appDef, hdf5Path, procroot);
+                validation_results = output;
+                console.log(output);
+                await render_table();
+                return output;
+            }
+
+            async function render_table() {
+                if (validation_results == null) {
+                    return
+                }
+                let show_severity = Object.fromEntries(SEVERITIES.map((sev) => ([
+                    sev, document.getElementById("show_severity_" + sev).checked
+                ])));
+                let table = document.getElementById("results_table");
+                table.innerHTML = "";
+                let hrow = table.insertRow();
+                for (let column of COLUMNS) {
+                    let th = document.createElement("th");
+                    th.innerHTML = column;
+                    hrow.appendChild(th);
+                };
+                for (let message of validation_results) {
+                    if (!show_severity[message.sev]) {
+                        continue;
+                    }
+                    let row = table.insertRow();
+                    for (let column of COLUMNS) {
+                        let cell = row.insertCell();
+                        if (column in message) {
+                            cell.innerHTML = message[column];
+                        }
+                        if (column == "sev") {
+                            cell.classList.add(message[column]);
+                        }
+
+                    }
+                }
+            }
+
+            async function upload() {
+                var file_input = this;
+                var file = file_input.files[0]; // only one file allowed
+                let datafilename = file.name;
+                let ab = await file.arrayBuffer();
+                let an = libvalid.FS.analyzePath(WORKING_FILE);
+                if (an.exists) {
+                    libvalid.FS.unlink(WORKING_FILE);
+                }
+                libvalid.FS.writeFile(WORKING_FILE, new Uint8Array(ab), { flags: "w+" });
+                revalidate();
+                // file_input.value = "";
+            }
+
+            window.libvalid = libvalid;
+            let application_paths = await (await fetch("./application_paths.json")).json();
+            let select_el = document.getElementById("application_version");
+            for (let [version, path] of Object.entries(application_paths)) {
+                let opt = document.createElement("option");
+                opt.value = path;
+                opt.textContent = version;
+                select_el.appendChild(opt);
+            }
+            let uploader = document.getElementById("upload");
+            uploader.disabled = false;
+            uploader.onclick = function () { this.value = null };
+            uploader.onchange = upload;
+            document.getElementById("revalidate").onclick = revalidate;
+
+        }
+    </script>
+</body>
+
+</html>
