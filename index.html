@@ -66,6 +66,10 @@
         div.filters td {
             padding-right: 1em;
         }
+
+        header h1 {
+            display: inline;
+        }
     </style>
 </head>
 
@@ -74,8 +78,11 @@
             <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="#">upgrade your browser</a> to improve your experience.</p>
         <![endif]-->
     <header>
-        <h1>CNXValidate</h1>
+        <h1>CNXValidate-web</h1>
+        <em>based on <a href="https://github.com/nexusformat/cnxvalidate">cnxvalidate</a>, 
+            source code at <a href="https://github.com/bmaranville/cnxvalidate-web">cnxvalidate-web</a></em>
     </header>
+    <hr>
     <label>Upload file to validate: <input type="file" id="upload" disabled /></label>
     <label>Application Definition Version:<select id="application_version"></select></label>
     <button id="revalidate">validate</button>
@@ -84,7 +91,7 @@
         <label>HDF5 Path:<input type="text" id="hdf5Path" width="30" /></label>
         <label>Process root group:<input type="checkbox" id="procroot" /></label>
     </div>
-    <hr />
+    <hr>
     <div class="filters" id="filters">
         <h3>Show severity:</h3>
     </div>
