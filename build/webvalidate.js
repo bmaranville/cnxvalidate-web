@@ -86,32 +86,42 @@ Module['FS_createPath']("/", "application_defs", true, true);
 Module['FS_createPath']("/application_defs", "nexusformat-definitions-4aa4215", true, true);
 Module['FS_createPath']("/application_defs/nexusformat-definitions-4aa4215", "applications", true, true);
 Module['FS_createPath']("/application_defs/nexusformat-definitions-4aa4215/applications", "canSAS", true, true);
+Module['FS_createPath']("/application_defs/nexusformat-definitions-4aa4215", "base_classes", true, true);
 Module['FS_createPath']("/application_defs", "nexusformat-definitions-a3045fd", true, true);
 Module['FS_createPath']("/application_defs/nexusformat-definitions-a3045fd", "applications", true, true);
 Module['FS_createPath']("/application_defs/nexusformat-definitions-a3045fd/applications", "canSAS", true, true);
+Module['FS_createPath']("/application_defs/nexusformat-definitions-a3045fd", "base_classes", true, true);
 Module['FS_createPath']("/application_defs", "nexusformat-definitions-e888dac", true, true);
 Module['FS_createPath']("/application_defs/nexusformat-definitions-e888dac", "applications", true, true);
 Module['FS_createPath']("/application_defs/nexusformat-definitions-e888dac/applications", "canSAS", true, true);
+Module['FS_createPath']("/application_defs/nexusformat-definitions-e888dac", "base_classes", true, true);
 Module['FS_createPath']("/application_defs", "nexusformat-definitions-5c4cfec", true, true);
 Module['FS_createPath']("/application_defs/nexusformat-definitions-5c4cfec", "applications", true, true);
 Module['FS_createPath']("/application_defs/nexusformat-definitions-5c4cfec/applications", "canSAS", true, true);
+Module['FS_createPath']("/application_defs/nexusformat-definitions-5c4cfec", "base_classes", true, true);
 Module['FS_createPath']("/application_defs", "nexusformat-definitions-09fd569", true, true);
 Module['FS_createPath']("/application_defs/nexusformat-definitions-09fd569", "applications", true, true);
 Module['FS_createPath']("/application_defs/nexusformat-definitions-09fd569/applications", "canSAS", true, true);
+Module['FS_createPath']("/application_defs/nexusformat-definitions-09fd569", "base_classes", true, true);
 Module['FS_createPath']("/application_defs", "nexusformat-definitions-0649b8a", true, true);
 Module['FS_createPath']("/application_defs/nexusformat-definitions-0649b8a", "applications", true, true);
 Module['FS_createPath']("/application_defs/nexusformat-definitions-0649b8a/applications", "canSAS", true, true);
+Module['FS_createPath']("/application_defs/nexusformat-definitions-0649b8a", "base_classes", true, true);
 Module['FS_createPath']("/application_defs", "nexusformat-definitions-aa1ccd1", true, true);
 Module['FS_createPath']("/application_defs/nexusformat-definitions-aa1ccd1", "applications", true, true);
 Module['FS_createPath']("/application_defs/nexusformat-definitions-aa1ccd1/applications", "canSAS", true, true);
+Module['FS_createPath']("/application_defs/nexusformat-definitions-aa1ccd1", "base_classes", true, true);
 Module['FS_createPath']("/application_defs", "nexusformat-definitions-ddd9514", true, true);
 Module['FS_createPath']("/application_defs/nexusformat-definitions-ddd9514", "applications", true, true);
 Module['FS_createPath']("/application_defs/nexusformat-definitions-ddd9514/applications", "canSAS", true, true);
+Module['FS_createPath']("/application_defs/nexusformat-definitions-ddd9514", "base_classes", true, true);
 Module['FS_createPath']("/application_defs", "nexusformat-definitions-9d4e753", true, true);
 Module['FS_createPath']("/application_defs/nexusformat-definitions-9d4e753", "applications", true, true);
+Module['FS_createPath']("/application_defs/nexusformat-definitions-9d4e753", "base_classes", true, true);
 Module['FS_createPath']("/application_defs", "nexusformat-definitions-14aecd1", true, true);
 Module['FS_createPath']("/application_defs/nexusformat-definitions-14aecd1", "applications", true, true);
 Module['FS_createPath']("/application_defs/nexusformat-definitions-14aecd1/applications", "canSAS", true, true);
+Module['FS_createPath']("/application_defs/nexusformat-definitions-14aecd1", "base_classes", true, true);
       var start32 = Module['___emscripten_embedded_file_data'] >> 2;
       do {
         var name_addr = HEAPU32[start32++];
@@ -7244,7 +7254,7 @@ var dynCall_iji = Module["dynCall_iji"] = createExportWrapper("dynCall_iji");
 /** @type {function(...*):?} */
 var dynCall_jiji = Module["dynCall_jiji"] = createExportWrapper("dynCall_jiji");
 
-var ___emscripten_embedded_file_data = Module['___emscripten_embedded_file_data'] = 2861496;
+var ___emscripten_embedded_file_data = Module['___emscripten_embedded_file_data'] = 5619856;
 
 
 

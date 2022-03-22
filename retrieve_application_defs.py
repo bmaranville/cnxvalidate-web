@@ -7,7 +7,7 @@ import json
 
 applications_store = "application_defs"
 releases = requests.get("https://api.github.com/repos/nexusformat/definitions/releases").json()
-applications_re = re.compile(r"([^/]+/applications/).*")
+applications_re = re.compile(r"([^/]+)/(applications|base_classes)/.*")
 root_re = re.compile
 version_lookups = {}
 
@@ -23,8 +23,8 @@ for release in releases:
     version_lookups[release['tag_name']] = root_path
     for app in apps:
         zipball.extract(app, path=output_path)
-        
-        
+
+
 open("application_paths.json", "wt").write(json.dumps(version_lookups, indent=2))
-        
-    
+
+
