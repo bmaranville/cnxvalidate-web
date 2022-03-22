@@ -22,6 +22,7 @@ option(LIBXML2_WITH_FTP "Build ftp support" OFF)
 option(LIBXML2_WITH_LZMA "Build lzma support" OFF)
 # option(LIBXML2_WITH_THREADS "Build threads support" OFF)
 option(BUILD_SHARED_LIBS "Build shared libs" OFF)
+option(LIBXML2_WITH_TESTS "Build tests" OFF)
 
 set(CMAKE_INSTALL_PREFIX ${CMAKE_CURRENT_SOURCE_DIR}/dist)
 set(CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS} -sUSE_ZLIB=1")
