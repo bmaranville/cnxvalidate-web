@@ -7,7 +7,7 @@ import json
 
 applications_store = "application_defs"
 releases = requests.get("https://api.github.com/repos/nexusformat/definitions/releases").json()
-applications_re = re.compile(r"([^/]+)/(applications|base_classes)/.*")
+applications_re = re.compile(r"([^/]+)/(applications|base_classes|contributed_definitions)/.*")
 root_re = re.compile
 version_lookups = {}
 
